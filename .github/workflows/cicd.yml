@@ -28,6 +28,8 @@ jobs:
     needs: build
     runs-on: [demo]
     steps:
+      - name: Start docker
+        run: sudo service docker start
       - name: Pull Image from docker hub
         run: docker pull chunglnt0609/demo:latest
       - name: Delete old container
