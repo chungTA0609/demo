@@ -1,0 +1,40 @@
+name: CICD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+      - name: Clean cache
+        run: docker builder prune --force
+      - name: Force remove
+        run: docker system prune --all --force --volumes
+      - name: Build Project
+        run: mvn clean install -DskipTests
+      - name: Login to docker hub
+        run: docker login -u chunglnt0609 -p 6Linh@24012000
+      - name: Build docker image
+        run: docker build --no-cache -t chunglnt0609/javaproject .
+      - name: Publish image to docker hub
+        run: docker push chunglnt0609/javaproject:latest
+
+  deploy:
+    needs: build
+    runs-on: [ip-172-31-83-100]
+    steps:
+      - name: Pull Image from docker hub
+        run: docker pull chunglnt0609/javaproject:latest
+      - name: Delete old container
+        run: docker rm -f javaproject
+      - name: Run docker container
+        run: docker run -d -p 8081:8081 --name javaproject chunglnt0609/javaproject
