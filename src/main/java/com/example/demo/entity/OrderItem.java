@@ -1,3 +1,9 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+
 @Entity
 @Table(name="order_item")
 public class OrderItem {

@@ -1,3 +1,12 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+
+
 @Entity
 @Table(name = "shipment")
 public class Shipment {

@@ -1,3 +1,12 @@
+package com.example.demo.entity;
+
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "cycle_count")
 public class CycleCount {
@@ -14,6 +23,21 @@ public class CycleCount {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public void setLocation(Location location) {
+    }
+
+    public void setScheduledDate(LocalDateTime scheduledDate) {
+    }
+
+    public void setStatus(String scheduled) {
+    }
+
+    public void setCompletedDate(LocalDateTime now) {
+    }
+
+    public Object getLocation() {
+    }
 
     // Getters and setters
 }

@@ -1,3 +1,11 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "location")
 public class Location {
@@ -10,6 +18,9 @@ public class Location {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public Location(Long locationId) {
+    }
 
     // Getters and setters
 }

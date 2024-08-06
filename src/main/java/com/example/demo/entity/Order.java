@@ -1,3 +1,12 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "`order`")
 public class Order {
