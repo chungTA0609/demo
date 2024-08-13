@@ -1,6 +1,9 @@
 package com.example.demo.controller.back;
 
 import com.example.demo.dto.ReturnDTO;
+import com.example.demo.dto.ReturnRequestDTO;
+import com.example.demo.dto.ReturnStatusUpdateRequestDTO;
+import com.example.demo.entity.Return.Return;
 import com.example.demo.service.ReturnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,20 +17,20 @@ public class ReturnController {
     private ReturnService returnService;
 
     @PostMapping
-    public ResponseEntity<Long> createReturn(@RequestBody ReturnDTO returnDTO) {
-        Long returnId = returnService.createReturn(returnDTO.getOrderId(), returnDTO.getReason());
-        return ResponseEntity.status(HttpStatus.CREATED).body(returnId);
+    public ResponseEntity<Return> initiateReturn(@RequestBody ReturnRequestDTO request) {
+        Return initReturn =  returnService.initiateReturn(request.getShipmentId(), request.getReason(), request.getReturnItems());
+        return ResponseEntity.status(HttpStatus.CREATED).body(initReturn);
     }
 
-    @PutMapping("/{returnId}/process")
-    public ResponseEntity<Void> processReturn(@PathVariable Long returnId, @RequestBody String status) {
-        returnService.processReturn(returnId, status);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    @PutMapping("/{returnId}/status")
+    public ResponseEntity<Void> updateReturnStatus(@PathVariable Long returnId, @RequestBody ReturnStatusUpdateRequestDTO request) {
+        returnService.updateReturnStatus(returnId, request.getStatus());
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{returnId}/status")
-    public ResponseEntity<String> checkReturnStatus(@PathVariable Long returnId) {
-        String status = returnService.checkReturnStatus(returnId);
-        return ResponseEntity.ok(status);
+    @GetMapping("/{returnId}")
+    public ResponseEntity<Return>  trackReturn(@PathVariable Long returnId) {
+        Return trackReturn = returnService.trackReturn(returnId);
+        return ResponseEntity.status(HttpStatus.OK).body(trackReturn);
     }
 }

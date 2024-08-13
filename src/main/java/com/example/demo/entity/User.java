@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.Order.Order;
 import com.example.demo.entity.Token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
+    public User(Integer customerId) {
+        this.id = customerId;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

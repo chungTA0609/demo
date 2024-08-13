@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Inventory;
-
 import java.time.LocalDateTime;
 
 public interface InventoryService {
@@ -10,4 +8,5 @@ public interface InventoryService {
     int checkStockLevels(Long productId);
      void scheduleCycleCount(Long locationId, LocalDateTime scheduledDate);
     void performCycleCount(Long cycleCountId, int actualQuantity);
+
 }

@@ -1,33 +1,31 @@
 package com.example.demo.controller.shipment;
 
-import com.example.demo.dto.ShipmentDTO;
+import com.example.demo.dto.ShipmentRequestDTO;
+import com.example.demo.dto.ShipmentStatusUpdateRequestDTO;
+import com.example.demo.entity.Shipment.Shipment;
 import com.example.demo.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/shipments")
 public class ShipmentController {
+
     @Autowired
     private ShipmentService shipmentService;
 
     @PostMapping
-    public ResponseEntity<Long> createShipment(@RequestBody ShipmentDTO shipmentDTO) {
-        Long shipmentId = shipmentService.createShipment(shipmentDTO.getOrderId(), shipmentDTO.getCarrier(), shipmentDTO.getTrackingNumber());
-        return ResponseEntity.status(HttpStatus.CREATED).body(shipmentId);
+    public Shipment createShipment(@RequestBody ShipmentRequestDTO request) {
+        return shipmentService.createShipment(request.getOrder(), request.getCarrier(), request.getShipmentItems());
     }
 
     @PutMapping("/{shipmentId}/status")
-    public ResponseEntity<Void> updateShipmentStatus(@PathVariable Long shipmentId, @RequestBody String status) {
-        shipmentService.updateShipmentStatus(shipmentId, status);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public void updateShipmentStatus(@PathVariable Long shipmentId, @RequestBody ShipmentStatusUpdateRequestDTO request) {
+        shipmentService.updateShipmentStatus(shipmentId, request.getStatus());
     }
 
-    @GetMapping("/{shipmentId}/track")
-    public ResponseEntity<ShipmentDTO> trackShipment(@PathVariable Long shipmentId) {
-        ShipmentDTO shipmentDTO = shipmentService.trackShipment(shipmentId);
-        return ResponseEntity.ok(shipmentDTO);
+    @GetMapping("/{trackingNumber}")
+    public Shipment trackShipment(@PathVariable String trackingNumber) {
+        return shipmentService.trackShipment(trackingNumber);
     }
 }

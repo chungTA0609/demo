@@ -1,14 +1,15 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.entity.CycleCount;
-import com.example.demo.entity.Inventory;
-import com.example.demo.entity.Location;
+import com.example.demo.entity.Inventory.Inventory;
+import com.example.demo.entity.Location.Location;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.CycleCountRepository;
 import com.example.demo.repository.InventoryRepository;
 import com.example.demo.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Component
 public class InventoryServiceImpl implements InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
